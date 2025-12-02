@@ -6,7 +6,6 @@ from bot.bot import TelegramNotificationBot
 
 async def main():
     """Основная функция запуска"""
-    # Настройка логгера
     logger.add(
         "logs/bot.log",
         rotation="1 MB",
@@ -19,10 +18,8 @@ async def main():
     print("TELEGRAM NOTIFICATION BOT")
     print("=" * 50)
 
-    # Способ 1: Получить токен из .env файла
     token = None
 
-    # Проверяем .env файл в корне проекта
     env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
     if os.path.exists(env_path):
         print(f"📁 Найден .env файл: {env_path}")
@@ -38,7 +35,6 @@ async def main():
         except Exception as e:
             print(f"❌ Ошибка чтения .env: {e}")
 
-    # Способ 2: Запросить у пользователя
     if not token:
         print("\n" + "=" * 50)
         print("📝 Токен не найден в .env файле")
@@ -56,7 +52,6 @@ async def main():
             print("❌ Токен обязателен!")
             return
 
-        # Предлагаем сохранить в .env
         save = input("💾 Сохранить токен в .env файл? (y/n): ").strip().lower()
         if save == 'y':
             try:
@@ -67,7 +62,6 @@ async def main():
             except Exception as e:
                 print(f"⚠️ Не удалось сохранить в .env: {e}")
 
-    # Способ 3: Проверить переменные окружения
     if not token:
         token = os.getenv("BOT_TOKEN")
         if token:
@@ -79,7 +73,6 @@ async def main():
 
     print(f"\n✅ Используется токен: {token[:10]}...{token[-10:]}")
 
-    # Создаем простую конфигурацию
     class SimpleConfig:
         def __init__(self, token):
             self.token = token
@@ -93,7 +86,6 @@ async def main():
 
     config = SimpleConfig(token)
 
-    # Создание и запуск бота
     try:
         bot = TelegramNotificationBot(config)
 
