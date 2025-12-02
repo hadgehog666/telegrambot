@@ -4,10 +4,9 @@ from typing import List, Optional
 
 
 class BotConfig(BaseSettings):
-    """Конфигурация Telegram бота"""
 
     token: str = Field(
-        default="",  # Добавьте значение по умолчанию
+        default="",  
         env="BOT_TOKEN",
         description="Токен бота от @BotFather"
     )
@@ -52,13 +51,13 @@ class BotConfig(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-        extra = "ignore"  # Игнорировать лишние поля
+        extra = "ignore"  
 
 
-# Создаем конфиг с обработкой ошибок
+
 try:
     config = BotConfig()
 except Exception as e:
     print(f"⚠️ Внимание: Ошибка загрузки конфигурации: {e}")
     print("📝 Использую значения по умолчанию")
-    config = BotConfig(_env_file=None)  # Создаем без .env файла
+    config = BotConfig(_env_file=None)  
