@@ -6,14 +6,14 @@ from telegram.error import TelegramError, RetryAfter
 
 from core.config import BotConfig
 from core.models import FormattedMessage
-from utils.formatter import MessageFormatter
+from utils.formatter_fixed import FixedMessageFormatter
 
 
 class NotificationService:
     def __init__(self, bot: Bot, config: BotConfig):
         self.bot = bot
         self.config = config
-        self.formatter = MessageFormatter()
+        self.formatter = FixedMessageFormatter()
 
     async def send_formatted_message(
             self,
@@ -33,7 +33,7 @@ class NotificationService:
             )
 
             timestamp = self.formatter.get_timestamp()
-            formatted_text += f"\n\n<small>🕒 {timestamp}</small>"
+            formatted_text += f"\n\n<i>🕒 {timestamp}</i>"
 
             await self.bot.send_message(
                 chat_id=chat_id,
