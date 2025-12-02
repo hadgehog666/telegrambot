@@ -4,7 +4,6 @@ from core.models import NotificationPriority, NotificationType
 
 
 class FixedMessageFormatter:
-    """Форматтер сообщений без неподдерживаемых тегов"""
 
     PRIORITY_EMOJIS = {
         NotificationPriority.LOW: "ℹ️",
@@ -27,7 +26,6 @@ class FixedMessageFormatter:
             priority: NotificationPriority,
             include_timestamp: bool = True
     ) -> str:
-        """Форматирование БЕЗ тега small"""
         templates = {
             NotificationPriority.LOW: "ℹ️ <b>Информация</b>\n\n{}",
             NotificationPriority.MEDIUM: "📢 <b>Уведомление</b>\n\n{}",
@@ -40,16 +38,13 @@ class FixedMessageFormatter:
 
         if include_timestamp:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            # БЕЗ ТЕГА small - просто текст с эмодзи
             formatted += f"\n\n🕒 {timestamp}"
 
         return formatted
 
     def add_notification_type(self, text: str, notification_type: NotificationType) -> str:
-        """Добавление типа уведомления"""
         icon = self.TYPE_EMOJIS.get(notification_type, "📝")
         return f"{icon} {text}"
 
     def get_timestamp(self) -> str:
-        """Получение временной метки"""
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
